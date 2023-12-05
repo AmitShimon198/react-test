@@ -3,13 +3,18 @@ import { GetPeopleResponse } from "DataApi/people.interface";
 import PeopleList from "components/PeopleList";
 import SearchPeople from "components/SearchPeople";
 import { debounce } from "lodash";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState, useEffect } from "react";
+import countryService from "services/country.service";
 const initialValue = {
   searchResultCount: 0,
   searchResults: [],
   totalResultCounter: 0
 }
 const App: React.FunctionComponent = () => {
+  useEffect(() => {
+    countryService.getAndMapCountries();
+  }, [])
+
   const ref = useRef(null);
   const [searchResults, setSearchResults] = useState<GetPeopleResponse>(initialValue);
 
