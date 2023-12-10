@@ -1,19 +1,17 @@
 import { getPeople } from "DataApi";
 import { GetPeopleResponse } from "DataApi/people.interface";
+import CountryContextProvider from "components/CountryContextProvider";
 import PeopleList from "components/PeopleList";
 import SearchPeople from "components/SearchPeople";
 import { debounce } from "lodash";
-import { useCallback, useRef, useState, useEffect, FunctionComponent, useMemo } from "react";
-import countryService from "services/country.service";
+import { useCallback, useRef, useState, FunctionComponent, useMemo } from "react";
+
 const initialValue = {
   searchResultCount: 0,
   searchResults: [],
   totalResultCounter: 0
 }
 const App: FunctionComponent = () => {
-  useEffect(() => {
-    countryService.getAndMapCountries();
-  }, [])
 
   const ref = useRef<HTMLInputElement>(null);
   const [searchResults, setSearchResults] = useState<GetPeopleResponse>(initialValue);
@@ -31,11 +29,10 @@ const App: FunctionComponent = () => {
     }
   }, [])
 
-  const handleChange = useMemo(() => debounce(onChangeHandler, 1000), [onChangeHandler]);
+  const handleChange = useMemo(() => debounce(onChangeHandler, 300), [onChangeHandler]);
 
   return (
-    <>
-      <div></div>
+    <CountryContextProvider>
       <div className="pageWrapper">
         <p>Search Component</p>
         <SearchPeople ref={ref} handleChange={handleChange} />
@@ -48,7 +45,7 @@ const App: FunctionComponent = () => {
         <p>Found results: {searchResultCount}</p>
         <p>Total results: {totalResultCounter}</p>
       </div>
-    </>
+    </CountryContextProvider>
   );
 };
 
