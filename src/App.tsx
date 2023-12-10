@@ -3,7 +3,7 @@ import { GetPeopleResponse } from "DataApi/people.interface";
 import PeopleList from "components/PeopleList";
 import SearchPeople from "components/SearchPeople";
 import { debounce } from "lodash";
-import { useCallback, useRef, useState, useEffect, FunctionComponent } from "react";
+import { useCallback, useRef, useState, useEffect, FunctionComponent, useMemo } from "react";
 import countryService from "services/country.service";
 const initialValue = {
   searchResultCount: 0,
@@ -22,16 +22,16 @@ const App: FunctionComponent = () => {
     searchResults: peoples,
     totalResultCounter } = searchResults
 
-
-  const handleChange = useCallback(debounce(async () => {
+  const onChangeHandler = useCallback(async () => {
     if (!!ref.current) {
       const data = await getPeople({ search: ref.current?.value });
       setSearchResults(data)
     } else {
       setSearchResults(initialValue)
     }
-  }, 1000), [ref, setSearchResults]);
+  }, [])
 
+  const handleChange = useMemo(() => debounce(onChangeHandler, 1000), [onChangeHandler]);
 
   return (
     <>
