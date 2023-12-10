@@ -21,7 +21,7 @@ const App: FunctionComponent = () => {
     totalResultCounter } = searchResults
 
   const onChangeHandler = useCallback(async () => {
-    if (!!ref.current) {
+    if (!!ref.current?.value) {
       const data = await getPeople({ search: ref.current?.value });
       setSearchResults(data)
     } else {
