@@ -3,15 +3,8 @@ import { Country } from "DataApi/country.interface";
 import { keyBy } from "lodash";
 
 class CountryService {
-    static instance: CountryService | null = null;
     countriesObject = {};
     countries: Country[] = [];
-    constructor() {
-        if (CountryService.instance) {
-            return CountryService.instance;
-        }
-        CountryService.instance = this;
-    }
 
     async getAndMapCountries({ search = '' } = {}) {
         const { searchResults } = await getCountries({ search })
@@ -20,7 +13,7 @@ class CountryService {
         return { searchResults, countriesObject: this.countriesObject };
     }
 
-    getCountryByText({ search = '' } = {}) {
+    getCountryByAlpha2Code({ search = '' } = {}) {
         return this.countriesObject[search];
     }
 }
