@@ -1,6 +1,5 @@
 import { getPeople } from "DataApi";
 import { GetPeopleResponse } from "DataApi/people.interface";
-import CountryContextProvider from "components/CountryContextProvider";
 import PeopleList from "components/PeopleList";
 import SearchPeople from "components/SearchPeople";
 import { debounce } from "lodash";
@@ -32,7 +31,7 @@ const App: FunctionComponent = () => {
   const handleChange = useMemo(() => debounce(onChangeHandler, 300), [onChangeHandler]);
 
   return (
-    <CountryContextProvider>
+    <>
       <div className="pageWrapper">
         <p>Search Component</p>
         <SearchPeople ref={ref} handleChange={handleChange} />
@@ -45,7 +44,7 @@ const App: FunctionComponent = () => {
         <p>Found results: {searchResultCount}</p>
         <p>Total results: {totalResultCounter}</p>
       </div>
-    </CountryContextProvider>
+    </>
   );
 };
 
