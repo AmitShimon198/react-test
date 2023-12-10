@@ -17,7 +17,7 @@ class CountryService {
         const { searchResults } = await getCountries({ search })
         this.countries = searchResults;
         this.countriesObject = keyBy(searchResults, 'alpha2Code');
-        return searchResults;
+        return { searchResults, countriesObject: this.countriesObject };
     }
 
     getCountryByText({ search = '' } = {}) {
