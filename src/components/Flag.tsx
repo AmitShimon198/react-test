@@ -1,19 +1,11 @@
-import { getCountries } from 'DataApi';
-import { Country } from 'DataApi/country.interface';
-import React, { FunctionComponent, useEffect, useState } from 'react'
-import countryService from 'services/country.service';
+import React, { FunctionComponent, useContext } from 'react'
+import { CountryContext } from './CountryContext';
 interface FlagProps {
     countryCode: string;
 }
 const Flag: FunctionComponent<FlagProps> = ({ countryCode }) => {
-    const [flagSrc, setFlagSrc] = useState<string>('');
-    useEffect(() => {
-        const country = countryService.getCountryByText({ search: countryCode });
-        if (country?.flag) {
-            setFlagSrc(country?.flag)
-        }
-    }, [])
- 
+    const { countriesObject } = useContext(CountryContext)
+    const flagSrc = countriesObject[countryCode]?.flag;
     return (
         <img className="flag" height={50} src={flagSrc} alt={countryCode} />
     )
