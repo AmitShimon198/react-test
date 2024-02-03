@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from 'react'
-import Flag from './Flag';
+import { FunctionComponent } from 'react'
 import { People } from 'DataApi/people.interface';
+import PeopleItem from './PeopleListItem';
 
 interface PeopleListProps {
     peoples: People[];
@@ -10,10 +10,7 @@ const PeopleList: FunctionComponent<PeopleListProps> = ({ peoples }) => {
     return (
         <>
             {peoples.map(({ first_name, last_name, country, id }) => (
-                <div key={id}>
-                    <p>{first_name} {last_name}</p>
-                    <Flag countryCode={country} />
-                </div>))
+                <PeopleItem key={id} first_name={first_name} last_name={last_name} country={country} />))
             }
         </>
     )
